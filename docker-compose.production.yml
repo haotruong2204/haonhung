@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: haonhung_app
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app:cached
+      - /app/tmp
+      - gem-data:/usr/local/bundle
+    command: bundle exec puma -C config/puma.rb -e production
+    networks:
+      - haonhung-networks
+
+  redis:
+    image: redis
+    command: redis-server
+    container_name: haonhung.redis
+    volumes:
+      - redis-data:/var/shared/redis
+    networks:
+      - haonhung-networks
+
+networks:
+  haonhung-networks:
+    name: haonhung
+    external: true
+
+volumes:
+  gem-data:
+  redis-data:
