@@ -44,3 +44,4 @@ networks:
 volumes:
   gem-data:
   redis-data:
+  mysql_data:
